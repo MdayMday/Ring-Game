@@ -1,0 +1,119 @@
+class Node: 
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+class ringStack:
+    def __init__(self):
+        self.head = None 
+    def Index(self,index):
+        current_node = self.head
+        position = 0
+        while current_node is not None and position != index:
+            position += 1
+            current_node = current_node.next
+        return current_node
+    def insert(self, data):
+        new_node = Node(data)
+        if self.head is None:
+            self.head = new_node
+            return
+        current_node = self.head
+        while(current_node.next):
+            current_node = current_node.next
+        current_node.next = new_node
+    def update(self, val, index):
+        current_node = self.head
+        position = 0
+        if position == index:
+            current_node.data = val
+        else:
+            while(current_node != None and position != index):
+                position = position+1
+                current_node = current_node.next
+            if current_node != None:
+                current_node.data = val
+            else:
+                print("Index not present")
+    def display(self):
+        current = self.head
+        while current:
+            Rings = current.data
+            Rings()
+            current = current.next
+def red():
+    print("\033[1;31;40m (|||||||||||||)")
+def yellow():
+    print("\033[1;33;40m  (|||||||||||)")
+def green(): 
+    print("\033[1;32;40m   (|||||||||)")
+def blue(): 
+    print("\033[1;34;40m    (|||||||)")
+def purple():
+    print("\033[1;35;40m     (|||||)")
+def base():
+    print("\033[0;0;0m       |=|")
+stack = ringStack()
+def main():
+    x = 0
+    b = 0
+    j = 0
+    w = 0
+    usedList = []
+    usedColor = []
+    amountUp = -7
+    while (b != 7):
+        stack.insert(base)
+        b = b + 1
+    while (j == 0):
+        print("What would you like to do? (add rings or take them off?)")
+        pickList = ["add", "take"]
+        colors = ["red", "yellow", "green", "blue", "purple"]
+        list = [red, yellow, green, blue, purple]
+        pick = str(input())
+        if (int(pickList.index(pick)) == 0):
+            z = False
+            y = True
+        if (int(pickList.index(pick)) == 1):
+            y = False
+            z = True
+        while y == True:
+            while (x != 1):
+                stack.display()
+                if (len(colors) == 0):
+                    print("There are no more rings to place!")
+                    break
+                b = b - 1
+                print("What color would you like to add?", colors)
+                playPick = str(input())
+                player = int(colors.index(playPick))
+                newInfo = list[player]
+                stack.update(newInfo,b)
+                if playPick in colors:
+                    outColor = colors.pop(player)
+                    outFunk = list.pop(player)
+                    usedColor.insert(0, outColor)
+                    usedList.insert(0, outFunk)
+                    amountUp = amountUp + 1
+                else:
+                    print("The ring is not avaible at the moment.")
+            y = False
+            z = True
+        while z ==True:
+            while (w != 1):
+                print("Remove top ring? (y/n)")
+                com = ["y", "n"]
+                comp = str(input())
+                if (int(com.index(comp)) == 0):
+                        top = stack.Index((-amountUp))
+                        list.insert(0, top)
+                        over = usedColor.pop(0)
+                        colors.insert(0, over)
+                        stack.update(base, (-amountUp))
+                        amountUp -= 1
+                        stack.display()
+                elif (int(com.index(comp)) == 1):
+                    break
+            b = 7
+            y = True
+            z = False
+main()
